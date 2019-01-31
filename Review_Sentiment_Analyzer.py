@@ -1,6 +1,6 @@
 import re
 
-"""HW1.py: Contains three functions: one to encrypt a message using a key based on user input,
+"""Review_Sentiment_Analyzer.py: Contains three functions: one to encrypt a message using a key based on user input,
 one to determine if two numbers are coprime and illustrate the Euclidean method, and one to
 calculate an inverse modulo."""
 
@@ -9,6 +9,15 @@ __version__ = "1/25/19"
 
 
 def readAndDivideBySentiment(fileName):
+    """Traverses given file and separates all reviews into positive and negative based on the number at the end
+
+        Args:
+            fileName (str): path to the file to divide reviews.
+
+        Returns:
+            Tuple of lists containing reviews sorted by sentiment
+
+        """
     try:
         infile = open(fileName, "r")
         ls = infile.readlines()
@@ -29,6 +38,14 @@ def readAndDivideBySentiment(fileName):
 
 
 def cleanData(myData):
+    """
+        Args:
+            List of reviews to be cleaned
+
+        Returns:
+            Same list but all reviews cleaned grammatically
+
+        """
     for i in range(0, len(myData)):
         myData[i] = myData[i].lower()
         myData[i] = re.sub('[^A-Za-z0-9-\']+', ' ', myData[i])  # removing special characters w/o apostrophe & hyphen
@@ -92,6 +109,17 @@ def cleanData(myData):
 
 
 def calculateUniqueWordsFreq(trainData, cutOff):
+    """Calculates frequency of each unique word in the give list of reviews
+
+        Args:
+            trainData (list): List of reviews for analysis.
+            cutOff (int): Will remove the top (cutOff) frequency words from the dictionary, often includes words such
+            as 'a' 'and' and 'the'.
+
+        Returns:
+            A dictionary with keys of each unique word and the value corresponding to the frequency in all reviews.
+
+        """
     if cutOff < 0:
         print 'Invalid Cutoff'
         return
@@ -114,10 +142,24 @@ def calculateUniqueWordsFreq(trainData, cutOff):
 
 
 def calculateClassProbability(posTrain, negTrain):
+    """Calculates probability scores to be used in the next method
+
+        """
     return float(len(posTrain))/(len(posTrain) + len(negTrain)), float(len(negTrain))/(len(posTrain) + len(negTrain))
 
 
 def calculateScores(classProb, uniqueVocab, testData):
+    """Calculates probability scores based on a give formula to design positive and negative models
+
+        Args:
+            classProb (float): Calculated in previous method.
+            uniqueVocab (dict): Unique words frequency dictionary.
+            testData (list): List of reviews for scores to be calculated from
+
+        Returns:
+            list: list of scores for each review.
+
+        """
     review_scores = []
     values = uniqueVocab.values()
     division_factor = len(uniqueVocab) + sum(values)  # denominator of formula
@@ -139,6 +181,11 @@ def calculateScores(classProb, uniqueVocab, testData):
 
 def calculateAccuracy(positiveTestDataPositiveScores, positiveTestDataNegativeScores,
                       negativeTestDataPositiveScores, negativeTestDataNegativeScores):
+    """Designed to be used for the testing data given for determining how well the models performed. Takes in positive
+    and negative reviews run against the positive and negative models and determines which score was higher. Also
+    reports the correctness of the results. (Implemented in main method)
+
+        """
     tp = 0
     fp = 0
     tn = 0
@@ -157,6 +204,18 @@ def calculateAccuracy(positiveTestDataPositiveScores, positiveTestDataNegativeSc
 
 
 def demo(review):
+    """Determines the sentiment of any given review.
+
+        Args:
+            review (str): review given for analysis
+
+        Returns:
+            int: Represents the sentiment determined by testing the review against positive and negative models
+
+        .. _PEP 484:
+            https://www.python.org/dev/peps/pep-0484/
+
+        """
     tup = readAndDivideBySentiment("TRAINING.txt")
     cleanData(tup[0])
     cleanData(tup[1])
