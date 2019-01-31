@@ -1,5 +1,12 @@
 import re
 
+"""HW1.py: Contains three functions: one to encrypt a message using a key based on user input,
+one to determine if two numbers are coprime and illustrate the Euclidean method, and one to
+calculate an inverse modulo."""
+
+__author__ = "Christopher Lehman"
+__version__ = "1/25/19"
+
 
 def readAndDivideBySentiment(fileName):
     try:
