@@ -1,8 +1,8 @@
 import re
 
-"""Review_Sentiment_Analyzer.py: Contains three functions: one to encrypt a message using a key based on user input,
-one to determine if two numbers are coprime and illustrate the Euclidean method, and one to
-calculate an inverse modulo."""
+"""Machine learning algorithm with training data to determine if a product review has positive or negative sentiment 
+included. Program includes functionality for user to input a review and the program will output what it determines the
+sentiment to be after the learning phase. Also displays results from a large sample of testing data."""
 
 __author__ = "Christopher Lehman"
 __version__ = "1/25/19"
